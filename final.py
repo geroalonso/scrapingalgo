@@ -36,7 +36,10 @@ def openscrape(url):
   href_list = []
   links = driver.find_elements_by_tag_name("a")
   for link in links:
-    href_list.append(link.get_attribute('href'))
+    if localurlchecker(link, url) == True:
+      href_list.append(link.get_attribute('href'))
+    else:
+      continue
   driver.quit()
 
   return href_list
@@ -66,6 +69,8 @@ def localurlchecker(trial, url):
     5) in the other cases it returns false '''
 
 def crawling(baseurl, emaillimit):
+  global emails 
+  emails = []
   graph = {}
   visited = []
   queue = []
@@ -89,13 +94,30 @@ def crawling(baseurl, emaillimit):
     else:
       break
   print(set(emails))
+  with open('emails.txt', 'a') as f:
+    for item in set(emails):
+      f.write(item + '\n')
 
 
 
 
+crawling('https://www.dentalplanet.com', 5)
+crawling('https://rtechdental.com',5)
+crawling('https://abcdentalworks.com',5)
+crawling('https://www.useddentalequipment.net',5)
+crawling('https://www.atlasresell.com',5)
+crawling('https://qualitydentalequip.com',5)
+crawling('https://www.recycledental.com',5)
+crawling('https://bimedis.com',5)
+crawling('https://dentalequipmentused.net',5)
+crawling('https://www.dentaltown.com',5)
+crawling('https://dentalequipmentused.net',5)
+crawling('https://dentalequipmentused.net',5)
+crawling('https://www.renewdigital.com',5)
+crawling('https://dentalequipmentused.net',5)
+crawling('https://superdentalusa.com',5)
+crawling('https://www.servi-dent.com',5)
 
 
-
-crawling('https://www.marcusmillichap.com',10)
 
 
